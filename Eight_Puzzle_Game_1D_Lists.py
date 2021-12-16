@@ -1,5 +1,42 @@
-start_state_matrix = [1, 2, 3, 4, 5, 6, 0, 7, 8]
-goal_state_matrix = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+# 1 2 3 | 0 1 2
+# 4 5 6 | 3 4 5
+# 7 8 0 | 6 7 8
+# values| indices
+
+#take inputs
+
+print("""
+
+sequence or order for giving inputs
+
+# 1 2 3 | 0 1 2
+# 4 5 6 | 3 4 5
+# 7 8 0 | 6 7 8
+# values| indices
+
+# """)
+start_state_matrix = []
+goal_state_matrix = []
+#start_state_matrix = [1, 2, 3, 4, 5, 6, 0, 7, 8]
+#goal_state_matrix = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+for a in range(0, 9):
+    t = int(input("enter {}th element for start state of  puzzle".format(a)))
+    start_state_matrix.append(t)
+print(start_state_matrix)
+#for a in range(0, 8, 1):
+#    for c in range(0, 3, 1):
+#        print(start_state_matrix[a])
+#    print("\n")
+for a in range(0, 9):
+    t = int(input("enter {}th element for goal state of puzzle".format(a)))
+    goal_state_matrix.append(t)
+print(goal_state_matrix)
+#for a in range(0, 8, 1):
+#    for c in range(0, 3, 1):
+#        print(goal_state_matrix[a])
+#    print("\n")
+#start_state_matrix = map(input("enter start state matrix"))
+
 states_matrix = []
 states_matrix.append(start_state_matrix)
 
@@ -106,6 +143,7 @@ while start_state_matrix != goal_state_matrix and epoch <= 100 and isBreakLoop =
         #nodes_dictionary.update({"key" : outer_index, "parent" : nodes[outer_index], "move" : i, "value" : nodes[index]})
         #nodes_dictionary_list.insert(outer_index, nodes_dictionary)
         if(nodes[index + 1]) == goal_state_matrix:
+            print("got solution\n")
             isBreakLoop = True
         index = index + 1
     outer_index = outer_index + 1
