@@ -17,20 +17,22 @@ sequence or order for giving inputs
 # """)
 start_state_matrix = []
 goal_state_matrix = []
+#test case
 #start_state_matrix = [1, 2, 3, 4, 5, 6, 0, 7, 8]
 #goal_state_matrix = [1, 2, 3, 4, 5, 6, 7, 8, 0]
-for a in range(0, 9):
+for a in range(0, 9):   #take inputs for start_state_matrix
     t = int(input("enter {}th element for start state of  puzzle".format(a)))
     start_state_matrix.append(t)
-print(start_state_matrix)
+print("\nentered start_state_matrix is {}\n".format(start_state_matrix))
 #for a in range(0, 8, 1):
 #    for c in range(0, 3, 1):
 #        print(start_state_matrix[a])
 #    print("\n")
-for a in range(0, 9):
+for a in range(0, 9):   #take inputs for goal state matrix
     t = int(input("enter {}th element for goal state of puzzle".format(a)))
     goal_state_matrix.append(t)
-print(goal_state_matrix)
+print("\nentered goal state matrix is {}\n".format(goal_state_matrix))
+print("\n***********************************************************************************************")
 #for a in range(0, 8, 1):
 #    for c in range(0, 3, 1):
 #        print(goal_state_matrix[a])
@@ -62,13 +64,13 @@ def findVoidLocation(test_matrix):  #returns the location of void ' 0 '
 
 def findPossibleMoves(void_location):   #returns the possible moves for given location of void
     moves = ['up', 'down', 'left', 'right']
-    if void_location % 3 == 0:
+    if void_location % 3 == 0:  #is void is at extreme left column?
         moves.pop(moves.index('left'))
-    if void_location % 3 == 2:
+    if void_location % 3 == 2:  #is void at extreme right column?
         moves.pop(moves.index('right'))
-    if void_location >= 0 and void_location <= 3:
+    if void_location >= 0 and void_location <= 3:   #is void at extreme top row?
         moves.pop(moves.index('up'))
-    if void_location >= 6 and void_location <= 8:
+    if void_location >= 6 and void_location <= 8:   #is void at extreme low row?
         moves.pop(moves.index('down'))
     return(moves)
 
@@ -109,12 +111,14 @@ def moveTile(input_matrix, void_location, move):
         moveLeft(void_location, input_matrix)
         return(input_matrix)
 
-nodes_dictionary = {
+nodes_dictionary = {    #store key, parent node, child node and state
     "key" : 0,
     "parent" : states_matrix[0],
     #"moves" : findPossibleMoves(findVoidLocation(states_matrix[0]))
     #"child_index" : #child_index 
 }
+
+#just some crap
 
 nodes_dictionary_list = []
 nodes = [[1, 2, 3, 4, 5, 6, 0, 7, 8]]
@@ -126,8 +130,12 @@ outer_index = 0
 equalList(start_state_matrix, dummy_matrix)
 #equalList(start_state_matrix, dummy_matrix)
 isBreakLoop = False
-while start_state_matrix != goal_state_matrix and epoch <= 100 and isBreakLoop == False:
-    nodes_dictionary_list = []
+nodes_dictionary_list = []
+
+#end of just some crap
+
+while start_state_matrix != goal_state_matrix and epoch <= 100000 and isBreakLoop == False:
+    
     #print(nodes[outer_index])
     #loc = findVoidLocation(nodes[outer_index])
     for element in nodes[outer_index]:
@@ -140,8 +148,9 @@ while start_state_matrix != goal_state_matrix and epoch <= 100 and isBreakLoop =
         nodes.append([])
         equalList(moveTile(temp_matrix, loc, i), nodes[index + 1])
         print(nodes[index + 1], i)
-        #nodes_dictionary.update({"key" : outer_index, "parent" : nodes[outer_index], "move" : i, "value" : nodes[index]})
-        #nodes_dictionary_list.insert(outer_index, nodes_dictionary)
+        nodes_dictionary.update({"key" : outer_index, "parent" : nodes[outer_index], "move" : i, "value" : nodes[index + 1], "reached_Goal_?" : (nodes[index + 1] == goal_state_matrix)})
+        nodes_dictionary_copy = nodes_dictionary.copy()
+        nodes_dictionary_list.append(nodes_dictionary_copy)
         if(nodes[index + 1]) == goal_state_matrix:
             print("got solution\n")
             isBreakLoop = True
@@ -150,5 +159,9 @@ while start_state_matrix != goal_state_matrix and epoch <= 100 and isBreakLoop =
     epoch = epoch + 1
     #equalList()
     #states_matrix.append(moveTile(temp_matrix, findVoidLocation(temp_matrix), i))
-print(nodes)
-print(nodes_dictionary_list)
+#print(nodes)
+#print(nodes_dictionary_list)
+#goal_node = nodes_dictionary_list[len(nodes_dictionary_list) - 1]
+print("\n***********************************************************************************************\n")
+for i in nodes_dictionary_list: #print results tree
+    print(i)
